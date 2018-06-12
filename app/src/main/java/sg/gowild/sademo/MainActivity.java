@@ -223,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupNlu() {
         // TODO: Change Client Access Token
-        String clientAccessToken = "881ec2aeb77644bc845fb6dde010ff1e";
+        String clientAccessToken = "767424f74de54b2dba91684e552cc8e9";
         AIConfiguration aiConfiguration = new AIConfiguration(clientAccessToken,
                 AIConfiguration.SupportedLanguages.English);
         aiDataService = new AIDataService(aiConfiguration);
@@ -331,8 +331,11 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 
         try {
+            Log.d("test", "This is my message");
+//            System.out.print("ysrsder");
             Response response = okHttpClient.newCall(request).execute();
             String responseString = response.body().string();
+
 
             JSONObject jsonObject = new JSONObject(responseString);
             JSONArray forecasts = jsonObject.getJSONArray("items")
@@ -342,10 +345,18 @@ public class MainActivity extends AppCompatActivity {
             for (int i = 0; i < forecasts.length(); i++) {
                 JSONObject forecastObject = forecasts.getJSONObject(i);
                 String area = forecastObject.getString("area");
+                Log.d("areaList", area);
 
-                if (area.equalsIgnoreCase("clementi")) {
+
+            }
+
+            for (int i = 0; i < forecasts.length(); i++) {
+                JSONObject forecastObject = forecasts.getJSONObject(i);
+                String area = forecastObject.getString("area");
+
+                if (area.equalsIgnoreCase("Woodlands")) {
                     String forecast = forecastObject.getString("forecast");
-                    return "The weather in clementi is now " + forecast;
+                    return "The weather in Woodlands is now " + forecast;
                 }
             }
         } catch (IOException | JSONException e) {
